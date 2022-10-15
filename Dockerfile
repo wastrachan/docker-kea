@@ -2,7 +2,7 @@ FROM alpine:latest
 LABEL maintainer="Winston Astrachan"
 LABEL description="ISC Kea Server on Alpine Linux"
 
-RUN apk --no-cache add kea kea-hook-ha
+RUN apk --no-cache add kea kea-hook-ha kea-ctrl-agent
 RUN mkdir /config /run/kea/
 
 COPY overlay/ /
