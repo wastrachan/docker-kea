@@ -3,7 +3,7 @@ LABEL maintainer="Winston Astrachan"
 LABEL description="ISC Kea Server on Alpine Linux"
 
 RUN apk --no-cache add kea kea-hook-ha
-RUN mkdir /config
+RUN mkdir /config /run/kea/
 
 COPY overlay/ /
 VOLUME /config
