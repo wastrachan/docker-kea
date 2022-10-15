@@ -9,5 +9,5 @@ COPY overlay/ /
 VOLUME /config
 EXPOSE 67/udp
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["/usr/sbin/kea-dhcp4", "-c", "/config/kea.conf" ]
