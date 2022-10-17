@@ -1,6 +1,6 @@
 # Docker Image Makefile
 #
-# Copyright (c) Winston Astrachan 2019
+# Copyright (c) Winston Astrachan 2022
 #
 help:
 	@echo ""
@@ -26,8 +26,6 @@ build: .kea.img
 run: build
 	docker run -v "$(CURDIR)/config:/config" \
 	           --name kea \
-	           -e PUID=1111 \
-	           -e PGID=1112 \
 	           -p 67:67/udp \
 	           --restart unless-stopped \
 	           wastrachan/kea:latest
