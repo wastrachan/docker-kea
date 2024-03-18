@@ -1,6 +1,6 @@
-# Docker kea
+# Kea Docker Image
 
-ISC Kea Server in a Docker container with configuration files in a volume.
+ISC Kea in a Docker container with configuration files in a volume.
 
 [![](https://circleci.com/gh/wastrachan/docker-kea.svg?style=svg)](https://circleci.com/gh/wastrachan/docker-kea)
 [![](https://img.shields.io/docker/pulls/wastrachan/kea.svg)](https://hub.docker.com/r/wastrachan/kea)
@@ -41,10 +41,10 @@ Run this image with the `make run` shortcut, or manually with `docker run`.
 
 ```shell
 docker run -v "$(pwd)/config:/config" \
-	         --name kea \
-			     --rm \
-	         -p 67:67/udp \
-           wastrachan/docker-kea:latest
+	       --name kea \
+		   --rm \
+	       -p 67:67/udp \
+           wastrachan/kea:latest
 ```
 
 ## Configuration
