@@ -1,5 +1,4 @@
-Docker kea
-============
+# Docker kea
 
 ISC Kea Server in a Docker container with configuration files in a volume.
 
@@ -9,13 +8,23 @@ ISC Kea Server in a Docker container with configuration files in a volume.
 ## Install
 
 #### Docker Hub
+
 Pull the latest image from Docker Hub:
 
 ```shell
-docker pull wastrachan/docker-kea
+docker pull wastrachan/kea
 ```
 
-#### Manually
+#### Github Container Registry
+
+Or, pull from the GitHub Container Registry:
+
+```shell
+docker pull ghcr.io/wastrachan/kea
+```
+
+#### Build From Source
+
 Clone this repository, and run `make build` to build an image:
 
 ```shell
@@ -24,58 +33,38 @@ cd docker-kea
 make build
 ```
 
-If you need to rebuild the image, run `make clean build`.
-
-
 ## Run
 
 #### Docker
-Run this image with the `make run` shortcut, or manually with `docker run`.
 
+Run this image with the `make run` shortcut, or manually with `docker run`.
 
 ```shell
 docker run -v "$(pwd)/config:/config" \
-           --name docker-kea \
-           -p 67:67/udp
-           --restart unless-stopped \
+	         --name kea \
+			     --rm \
+	         -p 67:67/udp \
            wastrachan/docker-kea:latest
 ```
 
-
-#### Docker Compose
-If you wish to run this image with docker-compose, an example `docker-compose.yml` might read as follows:
-
-```yaml
----
-version: "2"
-
-services:
-  docker-kea:
-    image: wastrachan/docker-kea
-    container_name: docker-kea
-    volumes:
-      - </path/to/config>:/config
-    ports:
-      - 67:67/udp
-    restart: unless-stopped
-```
-
-
 ## Configuration
-Configuration files are stored in the `/config` volume. You may wish to mount this volume as a local directory, as shown in the examples above.
+
+Configuration files are stored in the `/config` volume. You may wish to mount this volume as a local directory, as shown in the examples above. `/config/kea.conf` is the main configuration file for the application. Review the Kea man pages if you are unfamiliar with how to configure Kea.
 
 #### Services
-Service     | Port
-------------|-----
-DHCP        | 67 (UDP)
+
+| Service | Port     |
+| ------- | -------- |
+| DHCP    | 67 (UDP) |
 
 #### Volumes
-Volume          | Description
-----------------|-------------
-`/config`       | Configuration directory
 
+| Volume    | Description             |
+| --------- | ----------------------- |
+| `/config` | Configuration directory |
 
 ## License
+
 The content of this project itself is licensed under the [MIT License](LICENSE).
 
 View [license information](https://www.isc.org/licenses/) for the software contained in this image.

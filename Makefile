@@ -1,44 +1,45 @@
-# Docker Image Makefile
-#
-# Copyright (c) Winston Astrachan 2022
-#
+# Kea Docker Image
+
+.PHONY: help
 help:
 	@echo ""
 	@echo "Usage: make COMMAND"
 	@echo ""
-	@echo "Docker Image makefile"
+	@echo "Docker Kea image makefile"
 	@echo ""
 	@echo "Commands:"
 	@echo "  build        Build and tag image"
+	@echo "  push         Push tagged image to registry"
 	@echo "  run          Start container in the background with locally mounted volume"
 	@echo "  stop         Stop and remove container running in the background"
-	@echo "  clean        Mark image for rebuild"
-	@echo "  delete       Delete image and mark for rebuild"
+	@echo "  delete       Delete all built image versions"
 	@echo ""
 
-build: .kea.img
+IMAGE=wastrachan/kea
+TAG=latest
+REGISTRY=docker.io
 
-.kea.img:
-	docker build -t wastrachan/kea:latest .
-	@touch $@
+.PHONY: build
+build:
+	@docker build -t ${REGISTRY}/${IMAGE}:${TAG} .
+
+.PHONY: push
+push:
+	@docker push ${REGISTRY}/${IMAGE}:${TAG}
 
 .PHONY: run
 run: build
 	docker run -v "$(CURDIR)/config:/config" \
 	           --name kea \
+			   --rm \
 	           -p 67:67/udp \
-	           --restart unless-stopped \
-	           wastrachan/kea:latest
+	           -d \
+	           ${REGISTRY}/${IMAGE}:${TAG}
 
 .PHONY: stop
 stop:
-	docker stop kea
-	docker rm kea
-
-.PHONY: clean
-clean:
-	rm -f .kea.img
+	@docker stop kea
 
 .PHONY: delete
-delete: clean
-	docker rmi -f wastrachan/kea
+delete:
+	@docker image ls | grep ${IMAGE} | awk '{print $$3}' | xargs -I + docker rmi +
