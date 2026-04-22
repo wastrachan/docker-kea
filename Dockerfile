@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.source="https://github.com/wastrachan/docker-kea/
 LABEL org.opencontainers.image.licenses="MIT"
 
 RUN apk --no-cache add kea kea-hook-ha kea-ctrl-agent
-RUN mkdir /config /run/kea/
+RUN mkdir /config /run/kea && chmod 750 /run/kea
 
 COPY overlay/ /
 VOLUME /config

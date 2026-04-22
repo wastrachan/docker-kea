@@ -14,5 +14,9 @@ if [ ! -f "/config/kea.conf" ]; then
     cp /defaults/kea.conf /config/kea.conf
 fi
 
+# Clean /run/kea
+echo "    [+] Cleaning /run/kea directory"
+rm -f /run/kea/*
+
 echo ""
 exec "$@"
